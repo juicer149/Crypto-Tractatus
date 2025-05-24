@@ -26,7 +26,7 @@ class SequenceMath:
 
 
     @staticmethod
-    def unique_rotation(length: int, step: int) -> int:
+    def unique_rotation(step: int, length: int) -> int:
         """
         Number of unique positions visited with a given step.
 

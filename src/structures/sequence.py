@@ -1,7 +1,7 @@
 # lib/sequences/sequence.py
 from typing import List, TypeVar, Generic, Callable, Iterator
 from dataclasses import dataclass
-from .sequence_transform import SequenceTransform
+from  adapters.sequence_adapter import SequenceAdapter
 
 
 T = TypeVar("T")
@@ -107,7 +107,7 @@ class Sequence(Generic[T]):
         Sequence(data=['C', 'A', 'B'])
         """
         
-        return Sequence(SequenceTransform.rotate(self.data, shift))
+        return Sequence(SequenceAdapter.rotate(self.data, shift))
 
 
     def move_to_front(self, elements: List[T]) -> Iterator['Sequence[T]']:
@@ -118,6 +118,6 @@ class Sequence(Generic[T]):
         [Sequence(data=['C', 'A', 'B'])]
         """
 
-        for variant in SequenceTransform.move_elements_to_front(self.data, elements):
+        for variant in SequenceAdapter.move_elements_to_front(self.data, elements):
             yield Sequence(variant)
 

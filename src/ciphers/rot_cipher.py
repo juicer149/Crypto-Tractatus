@@ -2,7 +2,7 @@ from core.concept import CryptoConcept
 from structures.alphabet import Alphabet
 from structures.sequence import Sequence
 from meta.registry import MappingMixin
-from transforms.sequence_ops import SequenceTransform
+from adapters.sequence_adapter import SequenceAdapter
 
 
 def rot_transform(seq: Sequence[str], alphabet: Alphabet, shift: int) -> Sequence[str]:
@@ -27,7 +27,7 @@ def rot_transform(seq: Sequence[str], alphabet: Alphabet, shift: int) -> Sequenc
         >>> rot_transform(seq, alpha, 1).data
         ['B', 'C', 'A']
     """
-    rotated = SequenceTransform.rotate(alphabet.sequence.data, shift)
+    rotated = SequenceAdapter.rotate(alphabet.sequence.data, shift)
     mapping = MappingMixin()(alphabet.sequence.data, rotated)
     return Sequence([mapping.get(char, '?') for char in seq.data])
 

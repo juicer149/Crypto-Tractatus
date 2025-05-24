@@ -1,7 +1,7 @@
 # lib/alphabet/rotation_table.py
 from typing import Dict, List
 from .alphabet import Alphabet
-from transforms.sequence_ops import SequenceTransform
+from transforms.sequence_ops import SequenceAdapter
 
 MODES = {
     "normal": lambda x: x,
@@ -31,7 +31,7 @@ class RotationTable:
         transform = MODES.get(mode, MODES["normal"])
         self.rows: Dict[int, List[str]] = {
             i: transform(row.data)
-            for i, row in enumerate(SequenceTransform.rotate_generator(base.sequence, step))
+            for i, row in enumerate(SequenceAdapter.rotate_generator(base.sequence, step))
         }
 
     def __getitem__(self, index: int) -> List[str]:

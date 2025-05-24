@@ -1,6 +1,6 @@
 from typing import List
 from lib.structures.rotation_matrix import RotationMatrix
-from transforms.sequence_ops import SequenceTransform
+from adapters.sequence_adapter import SequenceAdapter
 
 class MatrixTransform:
     """
@@ -22,7 +22,7 @@ class MatrixTransform:
         >>> mt.matrix[0]
         ['C', 'A', 'B']
         """
-        new_matrix = [SequenceTransform.rotate(row, shift) for row in matrix.matrix]
+        new_matrix = [SequenceAdapter.rotate(row, shift) for row in matrix.matrix]
         return RotationMatrix(base_sequence=matrix.base_sequence, matrix=new_matrix)
 
     @staticmethod
