@@ -1,6 +1,6 @@
 # src/transforms/list_ops.py
 
-from typing import Callable, Iterator, TypeVar, List
+from typing import Callable, Iterator, TypeVar, List,
 
 # kanske byta namn till rotation_math?
 from math.sequence_math import (
