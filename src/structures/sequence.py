@@ -97,27 +97,3 @@ class Sequence(Generic[T]):
         for fn in functions:
             result = fn(result)
         return result
-
-
-    def rotate(self, shift: int) -> 'Sequence[T]':
-        """
-        Rotate sequence by shift (positive or negative).
-
-        >>> Sequence(['A', 'B', 'C']).rotate(1)
-        Sequence(data=['C', 'A', 'B'])
-        """
-        
-        return Sequence(SequenceAdapter.rotate(self.data, shift))
-
-
-    def move_to_front(self, elements: List[T]) -> Iterator['Sequence[T]']:
-        """
-        Yield variants with specified elements moved to front.
-
-        >>> list(Sequence(['A', 'B', 'C']).move_to_front(['C']))
-        [Sequence(data=['C', 'A', 'B'])]
-        """
-
-        for variant in SequenceAdapter.move_elements_to_front(self.data, elements):
-            yield Sequence(variant)
-
