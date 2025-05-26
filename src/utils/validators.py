@@ -17,20 +17,21 @@ def ensure_non_empty(seq, msg: str = "Cannot operate on empty sequence.") -> Non
     if not seq:
         raise EmptySequenceError(msg)
 
-
-def ensure_positive(n: int, msg: str = "Value must be positive.") -> None:
+# name before - ensure_positiv
+def ensure_greater_then(n: int, threshold: int = 0, msg: str = None) -> None:
     """
-    Raise an error if the number is zero or negative.
+    Ensures that a given integer `n` is greater than `threshold`.
 
     Args:
-        n: Integer to check.
-        msg: Optional custom error message.
+        n: The number to validate.
+        threshold: Minimum value `n` must exceed.
+        msg: Custom error message.
 
     Raises:
-        ValueError: If n <= 0.
+        ValueError: If `n` is less than or equal to `threshold`.
     """
-    if n <= 0:
-        raise ValueError(msg)
+    if n <= threshold:
+        raise ValueError(msg or f"Value must be greater than {threshold}.")
 
 
 def ensure_not_equal(n: int, disallowed: int, msg: str = "Value must not be equal to disallowed.") -> None:
