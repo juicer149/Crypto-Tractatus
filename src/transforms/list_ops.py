@@ -104,3 +104,34 @@ def generate_sequence_lists(n: int, generator_func: Callable[[int], List[T]]) ->
     """
     ensure_greater_than(n, 1, "Must generate more than one sequence.")
     return [generator_func(i) for i in range(n)]
+
+
+def rotate_sequence_by_lookup_values(
+    keys: List[str],
+    reference: List[str]
+) -> List[List[str]]:
+    """
+    For each key, rotate the reference list so that the key is at index 0.
+
+    This is used in ciphers like Vigenère to generate rotation rows based on a key sequence.
+
+    Args:
+        keys: Elements that determine how the reference is rotated.
+        reference: The list to rotate from (e.g., an alphabet).
+
+    Returns:
+        A list of rotated lists based on key positions in the reference.
+
+    Example:
+        >>> rotate_sequence_by_lookup_values(["B", "A"], ["A", "B", "C"])
+        [['B', 'C', 'A'], ['A', 'B', 'C']]
+    """
+    seen = {}
+    result = []
+    for key in keys:
+        if key not in seen:
+            idx = reference.index(key)
+            seen[key] = reference[idx:] + reference[:idx]
+        result.append(seen[key])
+    return result
+
