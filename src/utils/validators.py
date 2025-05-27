@@ -3,7 +3,7 @@
 from core.error import EmptySequenceError
 
 
-def ensure_non_empty(seq, msg: str = "Cannot operate on empty sequence.") -> None:
+def ensure_not_empty(seq, msg: str = "Cannot operate on empty sequence.") -> None:
     """
     Raise an error if the sequence is empty.
 
@@ -18,7 +18,11 @@ def ensure_non_empty(seq, msg: str = "Cannot operate on empty sequence.") -> Non
         raise EmptySequenceError(msg)
 
 # name before - ensure_positiv
-def ensure_greater_then(n: int, threshold: int = 0, msg: str = None) -> None:
+def ensure_greater_then(
+        n: int,
+        threshold: int = 0,
+        msg: str = "Value must be greater than threshold." 
+        ) -> None:
     """
     Ensures that a given integer `n` is greater than `threshold`.
 

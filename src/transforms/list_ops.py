@@ -1,17 +1,14 @@
 # src/transforms/list_ops.py
 
-from typing import Callable, Iterator, TypeVar, List,
+from typing import Callable, Iterator, TypeVar, List
 
 # kanske byta namn till rotation_math?
-from math.sequence_math import (
-        normalize_shift, 
-        unique_rotation,
-)
+from math.sequence_math import normalize_shift 
+
 from utils.validators import (
         ensure_not_empty,
-        ensure_positive,
         ensure_not_equal,
-        ensure_greater_than,
+        ensure_greater_then,
 )
 
 
@@ -102,7 +99,7 @@ def generate_sequence_lists(n: int, generator_func: Callable[[int], List[T]]) ->
         >>> generate_sequence_lists(3, gen)
         [['A', 'B', 'C'], ['B', 'C', 'A'], ['C', 'A', 'B']]
     """
-    ensure_greater_than(n, 1, "Must generate more than one sequence.")
+    ensure_greater_then(n, 1, "Must generate more than one sequence.")
     return [generator_func(i) for i in range(n)]
 
 
@@ -133,5 +130,24 @@ def rotate_sequence_by_lookup_values(
             idx = reference.index(key)
             seen[key] = reference[idx:] + reference[:idx]
         result.append(seen[key])
+    return result
+
+
+def unique_preserve_order(seq: List[str]) -> List[str]:
+    """
+    Return a list with duplicates removed, preserving the original order.
+
+    Useful for reducing keywords before generating cipher mappings.
+    
+    Example:
+        >>> unique_preserve_order(["L", "E", "M", "O", "N", "L"])
+        ['L', 'E', 'M', 'O', 'N']
+    """
+    seen = set()
+    result = []
+    for item in seq:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
     return result
 

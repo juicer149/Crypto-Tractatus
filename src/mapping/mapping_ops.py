@@ -1,4 +1,5 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Callable, Iterator, Union
+
 import warnings
 
 def build_char_mapping(
@@ -27,40 +28,39 @@ def build_char_mapping(
     return map_keys_to_values(base, *generated)
 
 
-def map_keys_to_values(keys: List[Any], *value_lists: List[Any], warn: bool = True) -> Dict[Any, List[Any]]:
+def map_keys_to_values(keys: List[Any], *value_lists: List[Any], warn: bool = True) -> Dict[Any, Union[Any, List[Any]]]:
     """
-    Creates a mapping from keys to zipped value lists.
-
-    This is useful for representing relation tables (e.g., Vigenère or Enigma)
-    where one list acts as a header or row identifier, and the others provide
-    corresponding values.
-
-    If the lengths mismatch, missing values are filled with None, and optionally a warning is issued.
+    Map keys to one or more value lists. 
+    If one list is provided, map key to single value. If multiple, map key to list of values.
 
     Args:
-        keys: The primary list to use as dict keys.
-        *value_lists: One or more value lists to be zipped per key.
-        warn: Whether to issue a warning if lists differ in length.
+        keys: List of keys.
+        *value_lists: Value lists to associate per key.
+        warn: Whether to issue warning on length mismatch.
 
     Returns:
-        A dictionary mapping each key to a list of associated values.
+        Dict mapping each key to value or list of values.
 
     Example:
+        >>> map_keys_to_values(['A', 'B'], ['C', 'D'])
+        {'A': 'C', 'B': 'D'}
         >>> map_keys_to_values(['A', 'B'], ['C', 'D'], ['E', 'F'])
         {'A': ['C', 'E'], 'B': ['D', 'F']}
     """
+    single = len(value_lists) == 1
     max_len = max(len(keys), *(len(v) for v in value_lists))
     result = {}
 
     for i, key in enumerate(keys):
-        mapped = []
-        for value_list in value_lists:
-            if i < len(value_list):
-                mapped.append(value_list[i])
+        values = []
+        for vlist in value_lists:
+            if i < len(vlist):
+                values.append(vlist[i])
             else:
                 if warn:
                     warnings.warn(f"Value list shorter than keys at index {i}")
-                mapped.append(None)
-        result[key] = mapped
+                values.append(None)
+
+        result[key] = values[0] if single else values
 
     return result
