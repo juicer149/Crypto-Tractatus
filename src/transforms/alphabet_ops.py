@@ -20,13 +20,6 @@ def from_unicode_ranges(ranges: List[Tuple[int, int]]) -> List[str]:
     return chars
 
 
-def from_string(s: str) -> List[str]:
-    """
-    Generate a list of characters from a string.
-    """
-    return list(s)
-
-
 def with_extras(base: List[str], extras: List[str]) -> List[str]:
     """
     Combine a base list with extra characters, ensuring uniqueness.
