@@ -1,14 +1,21 @@
 from typing import List, Union
+from dataclasses import dataclass
 
 from ciphers.base_cipher import CipherBit
 from transforms.rot_ops import shift_characters
 
 
+@dataclass  
 class RotCipher(CipherBit):
+    """
+    A class to implement a ROT cipher, which shifts characters by a specified number.
+    Attributes:
+        text (str): The input text to be encrypted or decrypted.
+        alphabet (Union[str, List[str]]): The alphabet used for the cipher.
+        shift (int): The number of positions to shift each character.
+    """
 
-    def __init__(self, text: Union[str, List[str]], alphabet: List[str], shift: int):
-        super().__init__(text, alphabet)
-        self.shift = shift
+    shift: int
 
 
     def __call__(self, mode: str = "encrypt") -> List[str]:
