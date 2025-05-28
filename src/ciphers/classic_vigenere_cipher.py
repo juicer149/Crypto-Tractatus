@@ -1,7 +1,6 @@
 from typing import List, Callable
 from dataclasses import dataclass, field
 from ciphers.base_cipher import CipherBit
-from transforms.string_ops import split_text_to_chars
 from transforms.list_ops import rotate_sequence_by_lookup_values, unique_preserve_order
 from utils.validators import ensure_not_empty
 
@@ -15,12 +14,12 @@ class ClassicVigenereCipher(CipherBit):
         CipherBit: Provides text and alphabet as character lists.
 
     Attributes:
-        keyword (str): The encryption keyword.
+        keyword (List[str]): The keyword used for encryption/decryption.
         _key_chars (List[str]): Deduplicated characters from the keyword.
         _rotations (List[List[str]]): Rotated alphabets for each key character.
     """
 
-    keyword: str
+    keyword: List[str] 
     _key_chars: List[str] = field(init=False)
     _rotations: List[List[str]] = field(init=False)
 
@@ -28,8 +27,7 @@ class ClassicVigenereCipher(CipherBit):
         super().__post_init__()  # Calls CipherBit.__post_init__ to validate text/alphabet
 
         ensure_not_empty(self.keyword)
-        raw_key = split_text_to_chars(self.keyword)
-        self._key_chars = unique_preserve_order(raw_key)
+        self._key_chars = unique_preserve_order(self.keyword)
         self._rotations = rotate_sequence_by_lookup_values(self._key_chars, self.alphabet)
 
 
