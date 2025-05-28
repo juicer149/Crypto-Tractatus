@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import List, Union
+from typing import List
 from dataclasses import dataclass
 
-from transforms.string_ops import split_text_to_chars
 from utils.validators import ensure_not_empty
 
 
@@ -16,18 +15,15 @@ class CipherBit(ABC):
         alphabet (List[str]): The alphabet used for encryption and decryption.
     """
     
-    text: Union[str, List[str]]
+    text: List[str]
     alphabet: List[str]
 
 
     def __post_init__(self):
         """Post-initialization to ensure text is in the correct format and not empty."""
-
-        if isinstance(self.text, str):
-            self.text = split_text_to_chars(self.text)
         
-        ensure_not_empty(self.text)
-        ensure_not_empty(self.alphabet)
+        ensure_not_empty(self.text, "Text must not be empty.")
+        ensure_not_empty(self.alphabet, "Alphabet must not be empty.")
 
 
     @abstractmethod
