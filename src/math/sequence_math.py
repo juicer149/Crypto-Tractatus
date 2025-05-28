@@ -9,7 +9,6 @@ Mathematical utility for analyzing step-based rotations of sequences.
 """
 
 
-@staticmethod
 def normalize_shift(shift: int, length: int) -> int:
     """
     Normalize shift to be within sequence bounds.
