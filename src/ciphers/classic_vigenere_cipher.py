@@ -1,39 +1,24 @@
 from typing import List, Callable
 from dataclasses import dataclass, field
+
 from ciphers.base_cipher import CipherBit
-from transforms.list_ops import rotate_sequence_by_lookup_values, unique_preserve_order
-from utils.validators import ensure_not_empty
+from transforms.list_ops import rotate_sequence_by_lookup_values
+from structures.sequences import KeywordSequence, AlphabetSequence
 
 
 @dataclass
 class ClassicVigenereCipher(CipherBit):
-    """
-    Classic Vigenère cipher that operates on a list of characters using a keyword.
-
-    Inherits from:
-        CipherBit: Provides text and alphabet as character lists.
-
-    Attributes:
-        keyword (List[str]): The keyword used for encryption/decryption.
-        _key_chars (List[str]): Deduplicated characters from the keyword.
-        _rotations (List[List[str]]): Rotated alphabets for each key character.
-    """
-
-    keyword: List[str] 
+    keyword: KeywordSequence
     _key_chars: List[str] = field(init=False)
     _rotations: List[List[str]] = field(init=False)
 
     def __post_init__(self):
-        super().__post_init__()  # Calls CipherBit.__post_init__ to validate text/alphabet
-
-        ensure_not_empty(self.keyword)
-        self._key_chars = unique_preserve_order(self.keyword)
-        self._rotations = rotate_sequence_by_lookup_values(self._key_chars, self.alphabet)
-
+        super().__post_init__()
+        self._key_chars = list(self.keyword)
+        self._rotations = rotate_sequence_by_lookup_values(self._key_chars, list(self.alphabet))
 
     def __call__(self, mode: str = "encrypt") -> List[str]:
         return self.encrypt() if mode == "encrypt" else self.decrypt()
-
 
     def _run_cipher(self, lookup: Callable[[List[str], str], str]) -> List[str]:
         result = []
@@ -56,6 +41,5 @@ class ClassicVigenereCipher(CipherBit):
         return self._run_cipher(lambda row, char: row[self.alphabet.index(char)])
 
     def decrypt(self) -> List[str]:
-        return self._run_cipher(lambda row, char: self.alphabet[row.index(char)] if char in row else '?')
-
+        return self._run_cipher(lambda row, char: self.alphabet[self.alphabet.index(char)] if char in row else '?')
 
