@@ -1,4 +1,3 @@
-from typing import Any
 
 class CryptoTractatusError(Exception):
     """Bas-klass för alla anpassade fel i CryptoTractatus."""
@@ -28,11 +27,20 @@ class InvalidCipherTypeError(CryptoTractatusError):
     def __init__(self, message="Invalid cipher type specified."):
         super().__init__(message)
 
+
 class InvalidInputTypeError(CryptoTractatusError):
     def __init__(self, message: str):
         super().__init__(message)
+
 
 class InvalidKeywordError(CryptoTractatusError):
     """Raised when an invalid keyword is used."""
     def __init__(self, message="Invalid keyword provided."):
         super().__init__(message)
+
+
+class DuplicateCharacterError(CryptoTractatusError):
+    """Raised when a sequence contains duplicate characters, but uniqueness is required."""
+    def __init__(self, message="Sequence must contain only unique characters."):
+        super().__init__(message)
+

@@ -1,5 +1,4 @@
 from typing import Any, List, TypeVar, Callable, Union, Optional
-from utils.validators import ensure_not_empty
 from utils.error import InvalidInputTypeError, InvalidKeywordError
 
 
@@ -22,7 +21,6 @@ def coerce_to_list(data: Any) -> List[Any]:
     else:
         raise InvalidInputTypeError(f"Cannot coerce type {type(data).__name__} to list.")
     
-    ensure_not_empty(result)
     return result
 
 
@@ -38,7 +36,6 @@ def coerce_to_char_list(data: Union[str, List[str]]) -> List[str]:
     else:
         raise InvalidInputTypeError(f"Expected str or List[str], but got {type(data).__name__}: {data!r}")
 
-    ensure_not_empty(result)
     return result
 
 def generate_coerced_fields(
