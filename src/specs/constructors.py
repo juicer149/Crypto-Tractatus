@@ -4,7 +4,7 @@ from specs.spec import CipherSpec
 from ciphers.rot_cipher import RotCipher
 from ciphers.classic_vigenere_cipher import ClassicVigenereCipher
 from ciphers.base_cipher import CipherBit
-from math.sequence_math import unique_rotation
+from cipher_math.sequence_math import unique_rotation
 from utils.error import InvalidRotationStepError, InvalidKeywordError
 from structures.sequences import TextSequence, AlphabetSequence, KeywordSequence
 

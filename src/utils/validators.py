@@ -1,6 +1,6 @@
 # src/utils/validators.py
 
-from core.error import EmptySequenceError
+from utils.error import EmptySequenceError
 
 
 def ensure_not_empty(seq, msg: str = "Cannot operate on empty sequence.") -> None:

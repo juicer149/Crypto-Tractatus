@@ -5,7 +5,6 @@ from typing import List, Union, Iterator
 from utils.coercion import coerce_to_char_list
 from utils.validators import ensure_not_empty
 from utils.error import InvalidKeywordError, DuplicateCharacterError
-from transforms.list_ops import unique_preserve_order
 
 
 @dataclass(frozen=True)
@@ -52,10 +51,4 @@ class KeywordSequence(SequenceBase):
     def __init__(self, raw: Union[str, List[str]]):
         coerced = coerce_to_char_list(raw)
         ensure_not_empty(coerced, "Keyword cannot be empty")
-
-        unique = unique_preserve_order(coerced)
-        if len(unique) < 2:
-            raise InvalidKeywordError(f"Keyword must contain at least two unique characters (got: {coerced}).")
-
-        object.__setattr__(self, "value", unique)
-
+        object.__setattr__(self, "value", coerced)

@@ -41,5 +41,10 @@ class ClassicVigenereCipher(CipherBit):
         return self._run_cipher(lambda row, char: row[self.alphabet.index(char)])
 
     def decrypt(self) -> List[str]:
-        return self._run_cipher(lambda row, char: self.alphabet[self.alphabet.index(char)] if char in row else '?')
+        return self._run_cipher(
+            lambda row, char: 
+            self.alphabet[row.index(char)]
+            if char in row 
+            else '?'
+        )
 

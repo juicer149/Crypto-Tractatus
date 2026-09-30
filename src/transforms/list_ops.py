@@ -3,7 +3,7 @@
 from typing import Callable, Iterator, TypeVar, List
 
 # kanske byta namn till rotation_math?
-from math.sequence_math import normalize_shift 
+from cipher_math.sequence_math import normalize_shift 
 
 from utils.validators import (
         ensure_not_empty,
